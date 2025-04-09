@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<head>
+    <title>{% block title %}Quora Clone{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header, footer {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            margin: 0;
+            display: inline-block;
+        }
+
+        nav {
+            float: right;
+        }
+
+        nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home_page' %}" style="text-decoration:none; color:#333;">Quora Clone Q&A</a></h1>
+        <nav>
+            {% if request.user.is_authenticated %}
+                <span>Welcome, <strong>{{ request.user.username|capfirst }}</strong></span>
+                <a href="{% url 'post_question' %}">Ask Question</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                {% comment %} <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register_user' %}">Register</a> {% endcomment %}
+            {% endif %}
+        </nav>
+        <div style="clear: both;"></div>
+    </header>
+    {% comment %} {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li style="color: red;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %} {% endcomment %}
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        
+    </footer>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<head>
+    <title>Question Page</title>
+</head>
+<body>
+    <h2>{{ question.title }}</h2>
+    <p>{{ question.content }}</p>
+    <p><small>Posted by <strong>{{ question.user.username|capfirst }}</strong> on {{ question.created_at }}</small></p>
+
+    <h3>Answers</h3>
+    <ul>
+        {% for answer in answers %}
+            <li>
+                <p>{{ answer.content }}</p>
+                <small>by <strong>{{ answer.user.username }}</strong> on {{ answer.created_at }}</small><br>
+                <a href="{% url 'like_answer' answer.id %}"><i class="fa-solid fa-thumbs-up"></i></a> ({{ answer.like_set.count }})
+            </li>
+        {% empty %}
+            <li>No answers yet.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Your Answer</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Answer</button>
+    </form>
+
+    <p><a href="{% url 'home_page' %}">Back to Home</a></p>
+</body>
+</html>
